@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="ignition-revolving-showcase">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: inline-block;
+                position: none;
+                width: 100%;
+                height: 100%;
+            }
+            
+            #temp-bg-color {
+                width: 100%;
+                height: 100%;
+                background-color: green;
+                content: url(/images/bg_standin.jpg);
+            }
+
+        </style>
+        <div id="temp-bg-color">
+        </div>
+
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'ignition-revolving-showcase',
+
+                properties: {
+                    questionText: {
+                        type: String,
+                        value: 'What is your favorite color?',
+                        notify: false
+                    }
+                }
+            });
+        })();
+
+    </script>
+
+</dom-module>

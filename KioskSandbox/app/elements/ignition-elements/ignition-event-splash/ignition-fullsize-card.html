@@ -1,0 +1,66 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+
+<dom-module id="ignition-fullsize-card">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: block;
+                position: absolute;
+                box-sizing: border-box;
+                background-color: aliceblue;
+            }
+            
+            paper-material {
+                width: 100%;
+                height: 100%
+            }
+
+        </style>
+        <paper-material class='tile' elevation='3' on-click="cardClicked">
+            <button on-click="backClicked">Back</button>
+            {{itemObject.title}}
+            <p>{{itemObject.content}}</p>
+        </paper-material>
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'ignition-fullsize-card',
+
+                behaviors: [
+                    Polymer.NeonSharedElementAnimatableBehavior,
+                    Polymer.NeonAnimatableBehavior,
+                    Polymer.NeonAnimationRunnerBehavior
+                ],
+
+                properties: {
+                    itemObject: {
+                        type: Object,
+                    },
+
+                    // animationConfig: { // type: Object, // value: function() { // return { // 'entry': [{ // name: 'cascaded-animation', // animation: 'transform-animation', // transformFrom: 'translateY(900%)', // transformTo: 'none', // timing: { // delay: 60 // } // }] // } // } // }
+                },
+                show: function() {
+                    //                    this.style.visibility = 'visible';
+                    //                    this.playAnimation('entry');
+                },
+                attached: function() {
+                    // this.async(function() { // var nodeList = Polymer.dom(this.root).querySelectorAll('.tile'); // this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList); // });
+                },
+                cardClicked: function(e) {
+
+                },
+                backClicked: function(e) {
+                    this.fire('back')
+                }
+
+            });
+        })();
+
+    </script>
+
+</dom-module>

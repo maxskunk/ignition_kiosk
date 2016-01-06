@@ -1,0 +1,166 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+
+<dom-module id="ignition-event-splash">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                visibility: hidden;
+            }
+            
+            .centered {
+                text-align: center;
+            }
+            
+            ignition-fullsize-card {
+                position: absolute;
+                bottom: 1%;
+                top: 10%;
+                left: 10%;
+                right: 10%;
+                text-align: center;
+            }
+            
+            ignition-splash-card {
+                width: 60%;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+            
+            .vertical-section {
+                margin-top: 20%;
+                height: 100%;
+            }
+            
+            neon-animated-pages {
+                width: 100%;
+                height: 100%;
+            }
+
+        </style>
+        <!--        <button dropdown-id="dropdown" on-click="handleClick">Showit!</button>-->
+        <neon-animated-pages id='pages' selected='0'>
+            <div class="vertical-section centered">
+
+                <template is="dom-repeat" items="{{selections}}">
+
+                    <!--
+  <paper-card class='tile' heading="{{item.title}}" elevation='3' on-click="cardClicked">
+    <p>{{item.content}}</p>
+</paper-card>
+-->
+                    <ignition-splash-card item-object="{{item}}" class='tile' on-click="cardClicked"></ignition-splash-card>
+                </template>
+
+            </div>
+            <ignition-fullsize-card item-object="{{selectedItemData}}"></ignition-fullsize-card>
+        </neon-animated-pages>
+
+
+    </template>
+
+    <script>
+        var self;
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'ignition-event-splash',
+
+                // handleClick: function(e) { // if (this.selectedPage == 1) { // this.selectedPage = 0; // } else { // this.selectedPage = 1; // } // // },
+                behaviors: [
+                    Polymer.NeonSharedElementAnimatableBehavior,
+                    Polymer.NeonAnimatableBehavior,
+                    Polymer.NeonAnimationRunnerBehavior
+                ],
+
+
+                properties: {
+                    selectedPage: {
+                        type: Number,
+                        value: 1
+                    },
+
+                    selectedItemData: {
+                        type: Object
+                    },
+
+                    selections: {
+                        type: Array,
+                        value: [{
+                            title: 'Current Weather in Denver, CO',
+                            content: 'The Weather Outside is frightful'
+                        }, {
+                            title: 'Dec 06',
+                            content: 'Movie Night!'
+                        }, {
+                            title: 'Vote for Movie Night',
+                            content: 'Click here to vote for movie'
+                        }, {
+                            title: 'Jan 15',
+                            content: 'Happy Hour at Gold Stone'
+                        }, {
+                            title: 'Jan 15',
+                            content: 'Happy Hour at Gold Stone'
+                        }, {
+                            title: 'Jan 15',
+                            content: 'Happy Hour at Gold Stone'
+                        }, {
+                            title: 'Jan 15',
+                            content: 'Happy Hour at Gold Stone'
+                        }]
+                    },
+                    animationConfig: {
+                        type: Object,
+                        value: function() {
+                            return {
+                                'entry': [{
+                                    name: 'cascaded-animation',
+                                    animation: 'transform-animation',
+                                    transformFrom: 'translateY(900%)',
+                                    transformTo: 'none',
+                                    timing: {
+                                        delay: 60
+                                    }
+                                }]
+                            }
+                        }
+                    }
+                },
+                show: function() {
+                    this.style.visibility = 'visible';
+                    this.playAnimation('entry');
+                    var fullSizeCard = document.querySelector('ignition-fullsize-card');
+                    fullSizeCard.addEventListener('back', this.backClicked);
+                    self = this;
+                },
+                attached: function() {
+                    this.async(function() {
+                        var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+                        this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+                    });
+                },
+                cardClicked: function(e) {
+                    console.log("Card CLicked" + e);
+                    self.$.pages.selected = 1;
+                    this.selectedItemData = e.currentTarget.itemObject;
+
+
+                },
+                backClicked: function(e) {
+
+                    self.$.pages.selected = 0;
+                }
+
+            });
+        })();
+
+    </script>
+
+</dom-module>
+
+<!--
+{ title: 'Weather', content: 'The Weather Outside is fightful' }, { title: 'Weather', content: 'The Weather Outside is fightful' }, { title: 'Weather', content: 'The Weather Outside is fightful' }, { title: 'Weather', content: 'The Weather Outside is fightful' }, { title: 'Weather', content: 'The Weather Outside is fightful' }-->

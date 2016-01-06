@@ -1,0 +1,81 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+
+<dom-module id="ignition-splash-card">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: inline-block;
+                position: relative;
+                box-sizing: border-box;
+            }
+            
+            paper-card {
+                width: 100%;
+                height: 100%
+            }
+
+        </style>
+
+        <paper-card class='tile' heading="{{itemObject.title}}" elevation='3' on-click="cardClicked">
+            <p>{{itemObject.content}}</p>
+        </paper-card>
+
+
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'ignition-splash-card',
+
+                behaviors: [
+                    Polymer.NeonSharedElementAnimatableBehavior,
+                    Polymer.NeonAnimatableBehavior,
+                    Polymer.NeonAnimationRunnerBehavior
+                ],
+
+                properties: {
+                    itemObject: {
+                        type: Object,
+                    },
+
+                    animationConfig: {
+                        type: Object,
+                        value: function() {
+                            return {
+                                'entry': [{
+                                    name: 'cascaded-animation',
+                                    animation: 'transform-animation',
+                                    transformFrom: 'translateY(900%)',
+                                    transformTo: 'none',
+                                    timing: {
+                                        delay: 60
+                                    }
+                                }]
+                            }
+                        }
+                    }
+                },
+                show: function() {
+                    this.style.visibility = 'visible';
+                    this.playAnimation('entry');
+                },
+                attached: function() {
+                    this.async(function() {
+                        var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+                        this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+                    });
+                },
+                cardClicked: function(e) {
+
+                }
+
+            });
+        })();
+
+    </script>
+
+</dom-module>
