@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="ignition-time-display">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                position: absolute;
+                top: 50px;
+                left: 50px;
+            }
+            
+            .time-display {
+                font-size: 80px;
+                color: white;
+                /*                -webkit-text-stroke-width: 1px; -webkit-text-stroke-color: grey;*/
+                text-shadow: 1px 1px black;
+            }
+            
+            .date-display {
+                font-size: 30px;
+                color: white;
+                margin-left: 8px;
+                /*
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: grey;
+*/
+                text-shadow: 1px 1px black;
+            }
+
+        </style>
+        <div class="time-display">
+            12:00
+        </div>
+        <div class="date-display">
+            Wednesday, December 4
+        </div>
+
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'ignition-time-display',
+
+                properties: {
+                    questionText: {
+                        type: String,
+                        value: 'What is your favorite color?',
+                        notify: false
+                    }
+                }
+            });
+        })();
+
+    </script>
+
+</dom-module>
